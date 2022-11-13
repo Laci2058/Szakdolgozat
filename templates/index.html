@@ -9,8 +9,18 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/dist/output.css') }}">
 </head>
 <body class="bg-slate-800">
-<div class="grid h-screen place-items-center">
-    <img src="/static/graf.png">
+<div class="absolute h-1/4 w-1/2 top-[10%] left-1/2 border-2 grid place-items-center -translate-x-1/2 -translate-y-[10%]">
+    <form action="/result" method="POST">
+        <label for="link" class="text-neutral-300 text-xl">Gib link: </label>
+        <input type="text" name="api_link" id="link"
+               class="text-xl text-neutral-300 bg-neutral-300 border rounded-md">
+        <input type="submit" class="bg-neutral-300">
+    </form>
+</div>
+<div class="text-neutral-300 text-3xl">
+    {% if name %}
+        {{ name }}
+    {% endif %}
 </div>
 </body>
 </html>
