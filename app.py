@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
 import requests
+from gremlin_python.driver.driver_remote_connection import DriverRemoteConnection
+from gremlin_python.process.anonymous_traversal import traversal
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def index():  # put application's code here
+def index():
+    g = traversal().with_remote(DriverRemoteConnection('ws://localhost:8182/gremlin', 'g'))
     """ issue_url = f"https://api.github.com/repos/CsharptutorialHungary/egyetemikurzus-2022/issues"
      all_issue = requests.get(issue_url).json()
      commit_url = f"https://api.github.com/repos/CsharptutorialHungary/egyetemikurzus-2022/commits"
@@ -30,15 +33,16 @@ def index():  # put application's code here
 
     return render_template("index.html")
 
-@app.route('/result',methods = ['POST','GET'])
+
+@app.route('/result', methods=['POST', 'GET'])
 def result():
     output = request.form.to_dict()
     name = output["api_link"].split('/')
-    """
+
     all_issue = requests.get(f"https://api.github.com/repos/{name[-2]}/{name[-1]}/issues").json()
     all_commit = requests.get(f"https://api.github.com/repos/{name[-2]}/{name[-1]}/commits").json()
-    """
-    return render_template("index.html",name=name)
+
+    return render_template("index.html")
 
 
 if __name__ == '__main__':
